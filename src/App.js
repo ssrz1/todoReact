@@ -1,21 +1,31 @@
 import React, { Component } from "react";
+import DisplayList from "./DisplayList";
 
 export default class App extends React.Component {
-  state = {
-    text: ""
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [],
+      text: ""
+    };
+  }
+  //adding items by using concatination
   handleSubmit(event) {
     //on submit we donot want submission to gone so we use preventDefault()
     event.preventDefault();
     let text = this.state.text;
-    console.log("form was submitted", text);
-    this.setState({ text: "" });
+    let newItems = this.state.items.concat(text);
+    this.setState({ text: "", items: newItems });
   }
   handleChange(event) {
     let text = event.target.value;
-    console.log(text);
     this.setState({ text: text });
+  }
+  handleDelete(itemToDelete) {
+    let newItems = this.state.items.filter(_item => {
+      return _item !== itemToDelete;
+    });
+    this.setState({ items: newItems });
   }
   render() {
     return (
@@ -29,6 +39,11 @@ export default class App extends React.Component {
           />
           <button>Submit</button>
         </form>
+
+        <DisplayList
+          handleDelete={this.handleDelete.bind(this)}
+          items={this.state.items}
+        />
       </div>
     );
   }

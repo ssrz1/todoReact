@@ -1,6 +1,8 @@
 import React from "react";
 import DisplayList from "./DisplayList";
 
+// var rand = require("random-key");
+
 export default class App extends React.Component {
   constructor() {
     super();
@@ -44,7 +46,7 @@ export default class App extends React.Component {
           />
           <button> Submit </button>
         </form>
-
+        {/* chaange into footer and than move it below */}
         <p>Number of total tasks: {this.state.todos.length}</p>
         {/* <p>
           Number of total tasks done:{" "}

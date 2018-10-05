@@ -1,52 +1,61 @@
-import React, { Component } from "react";
+import React from "react";
 import DisplayList from "./DisplayList";
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: [],
-      text: ""
-    };
+  constructor() {
+    super();
+    this.state = { title: "", todos: ["eggs", "banana", "bread"] };
   }
-  //adding items by using concatination
-  handleSubmit(event) {
-    //on submit we donot want submission to gone so we use preventDefault()
-    event.preventDefault();
-    let text = this.state.text;
-    let newItems = this.state.items.concat(text);
-    this.setState({ text: "", items: newItems });
-  }
-  handleChange(event) {
-    let text = event.target.value;
-    this.setState({ text: text });
-  }
-  handleDelete(itemToDelete) {
-    let newItems = this.state.items.filter(_item => {
-      return _item !== itemToDelete;
+
+  handleDelete(titleToBeDeleted) {
+    console.log(titleToBeDeleted);
+    var newtodos = this.state.todos.filter(_title => {
+      return _title !== titleToBeDeleted;
     });
-    this.setState({ items: newItems });
+
+    this.setState({ todos: newtodos });
   }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log("form was submitted");
+
+    var title = this.state.title;
+    var newtodos = this.state.todos.concat(title);
+
+    console.log("submitted form has value ", title);
+    this.setState({ title: "", todos: newtodos });
+  }
+
+  handleChange(event) {
+    var title = event.target.value;
+    console.log(title);
+    this.setState({ title: title });
+  }
+
   render() {
     return (
       <div>
-        <p>Todo</p>
-
+        <p> TODO </p>
         <form onSubmit={this.handleSubmit.bind(this)}>
           <input
             onChange={this.handleChange.bind(this)}
-            value={this.state.text}
+            value={this.state.title}
           />
-          <button>Submit</button>
+          <button> Submit </button>
         </form>
+
+        <p>Number of total tasks: {this.state.todos.length}</p>
+        {/* <p>
+          Number of total tasks done:{" "}
+          {this.state.items.filter(item => {}).length}
+        </p> */}
 
         <DisplayList
           handleDelete={this.handleDelete.bind(this)}
-          items={this.state.items}
+          todos={this.state.todos}
         />
       </div>
     );
   }
 }
-
-//export default App;
